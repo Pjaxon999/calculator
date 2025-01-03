@@ -11,3 +11,28 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: blue;
 }
+
+button {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    background-color: black;
+    color: white;
+}
+
+.container {
+    display: grid;
+    grid: auto / 1fr 1fr 1fr 1fr;
+    height: 500px;
+    width: 450px;
+}
+
+.row1 {
+    background: linear-gradient(45deg, #b0b0b0, #d3d3d3);
+    box-shadow: inset;
+    font-family: "Roboto Mono", sans-serif;
+    grid-column: 1 / 5;
+}
+
+#allClear {
+    background-color: salmon;
+}
