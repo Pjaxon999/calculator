@@ -68,3 +68,21 @@ button {
     background-color: salmon;
     grid-column: 4 / 5;
 }
+
+@media only screen and (max-width: 500px) {
+    .container { 
+        height: 400px;
+        width: 350px;
+        padding: 16px;
+        gap: 16px
+    }
+
+    #screen {
+        font-size: 39px;
+    }
+
+    #branding {
+        font-size: 19px;
+    }
+}
+
