@@ -50,6 +50,7 @@ button {
     grid-column: 1 / 5;
     border: 4px solid;
     border-radius: 10px;
+    height: 74px;
 }
 
 #branding {
@@ -79,6 +80,7 @@ button {
 
     #screen {
         font-size: 39px;
+        height: 60px;
     }
 
     #branding {
