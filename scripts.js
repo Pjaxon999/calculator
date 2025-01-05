@@ -66,7 +66,6 @@ equals.addEventListener("click", function() {operate(operator, num1, num2);});
 const addition = document.getElementById("add");
 addition.addEventListener("click", operationHandler);
 
-// Functions to populate the display.
 // Takes in the button that was pressed and changes the text content of the screen.
 function display(e) {
     if (num1Array.length < 13 && activeArray === true) {
@@ -84,8 +83,7 @@ function display(e) {
     }
 }
 
-// Function that, when an operator is pressed, updates the value of the operator
-// and switches to the second array to populate it with numbers
+// Function that, when an operator is pressed, updates the value of the operator and switches to the second array to populate it with numbers
 function operationHandler(e){
     operator = e.target.textContent;
     screen.textContent = "";
@@ -112,7 +110,13 @@ function multiply(num1, num2){
 }
 
 function divide(num1, num2){
+    num1 = parseInt(num1);
+    num2 = parseInt(num2);
+    if (num2 === 0) {
+        screen.textContent = "No."
+    } else {
     screen.textContent = num1 / num2
+    }
 }
 
 // Function to determine which operation should take place
