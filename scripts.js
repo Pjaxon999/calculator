@@ -18,7 +18,7 @@ let num2 = "";
 let num2Array = [];
 let operator = "+";
 const screen = document.getElementById("screen");
-let result
+let result;
 
 // Variables and Event listeners for the buttons
 const backspace = document.getElementById("backspace");
@@ -37,7 +37,7 @@ const nine = document.getElementById("9");
 nine.addEventListener("click", display);
 
 const division = document.getElementById("divide");
-division.addEventListener("click", operationHandler);
+division.addEventListener("click", operatorButtonPress);
 
 const four = document.getElementById("4");
 four.addEventListener("click", display);
@@ -49,7 +49,7 @@ const six = document.getElementById("6");
 six.addEventListener("click", display);
 
 const multiplication = document.getElementById("multiply");
-multiplication.addEventListener("click", operationHandler);
+multiplication.addEventListener("click", operatorButtonPress);
 
 const one = document.getElementById("1");
 one.addEventListener("click", display);
@@ -61,19 +61,19 @@ const three = document.getElementById("3");
 three.addEventListener("click", display);
 
 const subtraction = document.getElementById("subtract");
-subtraction.addEventListener("click", operationHandler);
+subtraction.addEventListener("click", operatorButtonPress);
 
 const zero = document.getElementById("0");
 zero.addEventListener("click", display);
 
 const decimal = document.getElementById("decimal");
-decimal.addEventListener("click", display);
+decimal.addEventListener("click", decimalPress);
 
 const equals = document.getElementById("equals");
 equals.addEventListener("click", function() {operate(operator, num1, num2);});
 
 const addition = document.getElementById("add");
-addition.addEventListener("click", operationHandler);
+addition.addEventListener("click", operatorButtonPress);
 
 // Takes in the button that was pressed and changes the text content of the screen.
 function display(e) {
@@ -89,6 +89,16 @@ function display(e) {
         num2 = num2Array.join("");
     } else {
         screen.textContent = "Too Many Nums";
+    }
+}
+
+// Function to handle multiple decimal presses
+function decimalPress(e) {
+    if (decimalPressed === true) {
+        return
+    } else if (decimalPressed === false) {
+        decimalPressed = true;
+        display(e);
     }
 }
 
@@ -117,7 +127,17 @@ function clear() {
     }
 }
 
-
+// Function that handles consecutive operator presses when there are valid inputs on screen
+function operatorButtonPress(e){
+    if (operatorPressed === false) {
+        operationHandler(e);
+        operatorPressed = true; 
+    } else if (operatorPressed === true && activeArray === false){
+        operate(operator, num1, num2);
+        operator = e.target.textContent;
+        activeArray = false;
+    }
+}
 
 // Function that, when an operator is pressed, updates the value of the operator and switches to the second array to populate it with numbers
 function operationHandler(e){
@@ -126,6 +146,7 @@ function operationHandler(e){
         return;
     } else if (activeArray === true) {
         activeArray = false;
+        decimalPressed = false;
     } else {
         activeArray = true;
     }
@@ -158,8 +179,8 @@ function divide(num1, num2){
 
 // Function to determine which operation should take place
 function operate(operator, num1, num2){
-    num1 = parseInt(num1) || 0;
-    num2 = parseInt(num2) || 0;
+    num1 = parseFloat(num1) || 0;
+    num2 = parseFloat(num2) || 0;
 
     return (operator === "+") ? add(num1, num2) 
     : (operator === "-") ? subtract(num1, num2)
@@ -175,6 +196,8 @@ function allClearPress(){
     num1Array = [];
     num2Array = [];
     activeArray = true;
+    decimalPressed = false;
+    operatorPressed = false;
     screen.textContent = '';
 }
 
@@ -186,4 +209,6 @@ function postCalc(){
     num2 = '';
     num2Array = [];
     activeArray = true;
+    operatorPressed = false;
+    return Number.isInteger(result) ? decimalPressed = false : decimalPressed = true;
 }
