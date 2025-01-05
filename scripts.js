@@ -1,7 +1,6 @@
 // Testing external link
 console.log("testing 123");
 
-
 // Have the operator toggle a boolean to true or false and use that to toggle between arrays
 let activeArray = true;
 
@@ -74,6 +73,36 @@ equals.addEventListener("click", function() {operate(operator, num1, num2);});
 
 const addition = document.getElementById("add");
 addition.addEventListener("click", operatorButtonPress);
+
+// My attempt to add some keyboard support
+window.addEventListener(
+    "keydown",
+    (event) => {
+        if (event.defaultPrevented) {
+            return;
+        }
+
+        switch (event.key) {
+            case "0": case "1": case "3": case "4": case "5": case "6": case "7": case "8": case "9":  
+                display(event.key);
+                break;
+            case "Enter":
+                operate(operator, num1, num2);
+                break;
+            case "Backspace":
+                clear();
+                break;
+            case "Delete":
+                allClearPress();
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+    },
+    true,
+);
 
 // Takes in the button that was pressed and changes the text content of the screen.
 function display(e) {
@@ -203,6 +232,12 @@ function allClearPress(){
 
 // Function to handle post calculation state
 function postCalc(){
+    result = Math.round(result * 10000000) / 10000000;
+    if (result.toString().length > 12) {
+        result = result
+        .toString()
+        .slice(0,13);
+    }
     screen.textContent = result;
     num1 = result;
     num1Array = [num1]
