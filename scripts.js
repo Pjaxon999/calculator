@@ -18,6 +18,7 @@ let num2 = "";
 let num2Array = [];
 let operator = "+";
 const screen = document.getElementById("screen");
+let result
 
 // Variables and Event listeners for the buttons
 const backspace = document.getElementById("backspace");
@@ -132,22 +133,26 @@ function operationHandler(e){
 
 // Functions for basic math operations
 function add(num1, num2){
-    screen.textContent = num1 + num2;
+    result = num1 + num2;
+    postCalc();
 }
 
 function subtract(num1, num2){
-    screen.textContent = num1 - num2;
+    result = num1 - num2
+    postCalc();
 }
 
 function multiply(num1, num2){
-    screen.textContent = num1 * num2;
+    result = num1 * num2;
+    postCalc();
 }
 
 function divide(num1, num2){
     if (num2 === 0) {
-        screen.textContent = "No."
+        screen.textContent = "No.";
     } else {
-    screen.textContent = num1 / num2
+    result = num1 / num2;
+    postCalc();
     }
 }
 
@@ -171,4 +176,14 @@ function allClearPress(){
     num2Array = [];
     activeArray = true;
     screen.textContent = '';
+}
+
+// Function to handle post calculation state
+function postCalc(){
+    screen.textContent = result;
+    num1 = result;
+    num1Array = [num1]
+    num2 = '';
+    num2Array = [];
+    activeArray = true;
 }
