@@ -5,6 +5,12 @@ console.log("testing 123");
 // Have the operator toggle a boolean to true or false and use that to toggle between arrays
 let activeArray = true;
 
+// Boolean toggle for an operator press
+let operatorPressed = false;
+
+// Boolean value for toggling decimal press 
+let decimalPressed = false;
+
 // Variables for later use with the calculator
 let num1 = "";
 let num1Array = [];
@@ -15,8 +21,10 @@ const screen = document.getElementById("screen");
 
 // Variables and Event listeners for the buttons
 const backspace = document.getElementById("backspace");
+backspace.addEventListener("click", clear);
 
 const allClear = document.getElementById("allClear");
+allClear.addEventListener("click", allClearPress);
 
 const seven = document.getElementById("7");
 seven.addEventListener("click", display);
@@ -83,11 +91,39 @@ function display(e) {
     }
 }
 
+//Function to handle a C (backspace) press
+function clear() {
+    if (activeArray === true) {
+        if (num1Array.length > 1) {
+            num1Array.pop(); 
+            num1 = num1Array.join(""); 
+            screen.textContent = num1; 
+        } else {
+            num1Array = [""];
+            num1 = "";
+            screen.textContent = "0";
+        }
+    } else {
+        if (num2Array.length > 1) {
+            num2Array.pop();
+            num2 = num2Array.join("");
+            screen.textContent = num2; 
+        } else {
+            num2Array = [""];
+            num2 = "";
+            screen.textContent = "0";
+        }
+    }
+}
+
+
+
 // Function that, when an operator is pressed, updates the value of the operator and switches to the second array to populate it with numbers
 function operationHandler(e){
     operator = e.target.textContent;
-    screen.textContent = "";
-    if (activeArray === true) {
+    if (num1 === "") {
+        return;
+    } else if (activeArray === true) {
         activeArray = false;
     } else {
         activeArray = true;
@@ -96,8 +132,6 @@ function operationHandler(e){
 
 // Functions for basic math operations
 function add(num1, num2){
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
     screen.textContent = num1 + num2;
 }
 
@@ -106,12 +140,10 @@ function subtract(num1, num2){
 }
 
 function multiply(num1, num2){
-    screen.textContent = num1 * num2
+    screen.textContent = num1 * num2;
 }
 
 function divide(num1, num2){
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
     if (num2 === 0) {
         screen.textContent = "No."
     } else {
@@ -121,9 +153,22 @@ function divide(num1, num2){
 
 // Function to determine which operation should take place
 function operate(operator, num1, num2){
+    num1 = parseInt(num1) || 0;
+    num2 = parseInt(num2) || 0;
+
     return (operator === "+") ? add(num1, num2) 
     : (operator === "-") ? subtract(num1, num2)
     : (operator === "x") ? multiply(num1, num2)
     : (operator === "÷") ? divide(num1, num2)
     : "Error, please try again";
+}
+
+// Function that clears the arrays and numbers after a calculation
+function allClearPress(){
+    num1 = '';
+    num2 = '';
+    num1Array = [];
+    num2Array = [];
+    activeArray = true;
+    screen.textContent = '';
 }
